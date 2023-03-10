@@ -1,0 +1,15 @@
+name: Build PBX-Manager
+
+on:
+  push:
+
+jobs:
+  build-pbx-manager:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Build PBX-Manager jar
+        run: ./gradlew bootJar
