@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: afonsoFGarcia
+      changes:
+        - createTable:
+            tableName: contacts
+            columns:
+              - column:
+                  name: phone_number
+                  type: VARCHAR
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR
+                  constraints:
+                    nullable: false

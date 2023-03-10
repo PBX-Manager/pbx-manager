@@ -26,13 +26,17 @@ extra["testcontainersVersion"] = "1.17.6"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-	runtimeOnly("org.postgresql:r2dbc-postgresql")
+	implementation("org.liquibase:liquibase-core")
+	implementation("org.springframework:spring-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("com.sun.xml.bind:jaxb-impl:4.0.2")
+	runtimeOnly("org.postgresql:postgresql")
+	runtimeOnly("org.postgresql:r2dbc-postgresql")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
