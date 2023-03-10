@@ -3,3 +3,9 @@ spring:
     url: r2dbc:postgres://localhost:5432/pbxmanager
     username: user
     password: pass
+
+tellows:
+  api-url: https://www.tellows.com/basic
+  api-key-md5: 399a147c51f6942600fa41412f2678d1
+  country: pt
+  language: pt
