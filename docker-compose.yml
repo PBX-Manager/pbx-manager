@@ -1,0 +1,15 @@
+# PBX-Manager
+# Development docker-compose
+# Do not use in production
+
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: pbxmanager
+    ports:
+      - "5432:5432"
