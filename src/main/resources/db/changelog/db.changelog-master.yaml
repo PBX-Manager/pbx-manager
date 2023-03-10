@@ -7,8 +7,8 @@ databaseChangeLog:
             tableName: contacts
             columns:
               - column:
-                  name: phone_number
-                  type: VARCHAR
+                  name: id
+                  type: SERIAL UNIQUE
                   constraints:
                     primaryKey: true
               - column:
@@ -16,3 +16,21 @@ databaseChangeLog:
                   type: VARCHAR
                   constraints:
                     nullable: false
+              - column:
+                  name: internal_extension
+                  type: VARCHAR
+              - column:
+                  name: office_number
+                  type: VARCHAR
+              - column:
+                  name: office_mobile_number
+                  type: VARCHAR
+              - column:
+                  name: home_number
+                  type: VARCHAR
+              - column:
+                  name: mobile_number
+                  type: VARCHAR
+              - column:
+                  name: other_number
+                  type: VARCHAR
