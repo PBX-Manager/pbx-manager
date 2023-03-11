@@ -1,27 +1,35 @@
 package dev.afonsogarcia.pbxmanager.router
 
-import dev.afonsogarcia.pbxmanager.service.TellowsCidService
+import dev.afonsogarcia.pbxmanager.handler.GetCallHistoryHandler
+import dev.afonsogarcia.pbxmanager.handler.GetCallerIdHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.RouterFunction
 import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import org.springframework.web.reactive.function.server.coRouter
 
 @Component
 class CidRouter (
-    private val tellowsCidService: TellowsCidService
+    private val getCallerIdHandler: GetCallerIdHandler,
+    private val getCallHistoryHandler: GetCallHistoryHandler
 ) {
 
     @Bean
     suspend fun cidRoutes(): RouterFunction<ServerResponse> =
         coRouter {
-            "/api/cid".nest {
-                GET("/{phoneNumber}") {
-                    ok().bodyValueAndAwait(tellowsCidService.getCallerId(it.pathVariable("phoneNumber")))
+            "/api".nest {
+                "/cid".nest {
+                    GET("/{phoneNumber}") {
+                        getCallerIdHandler.handleRequest(it)
+                    }
+                    GET("/") {
+                        getCallerIdHandler.handleRequest(it)
+                    }
                 }
-                GET("/") {
-                    ok().bodyValueAndAwait("Desconhecido")
+                "/call-history".nest {
+                    GET("/") {
+                        getCallHistoryHandler.handleRequest(it)
+                    }
                 }
             }
         }

@@ -34,3 +34,28 @@ databaseChangeLog:
               - column:
                   name: other_number
                   type: VARCHAR
+  - changeSet:
+      id: 2
+      author: afonsoFGarcia
+      changes:
+        - createTable:
+            tableName: call_history
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL UNIQUE
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: VARCHAR
+              - column:
+                  name: call_time
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
