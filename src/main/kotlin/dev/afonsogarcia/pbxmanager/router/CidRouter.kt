@@ -19,6 +19,14 @@ class CidRouter (
         coRouter {
             "/api".nest {
                 "/cid".nest {
+                    "/check".nest {
+                        GET("/{phoneNumber}") {
+                            getCallerIdHandler.handleRequest(it, false)
+                        }
+                        GET("/") {
+                            getCallerIdHandler.handleRequest(it, false)
+                        }
+                    }
                     GET("/{phoneNumber}") {
                         getCallerIdHandler.handleRequest(it)
                     }

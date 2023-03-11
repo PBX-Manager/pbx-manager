@@ -13,14 +13,18 @@ class GetCallerIdHandler(
     private val tellowsCidService: TellowsCidService,
     private val callHistoryService: CallHistoryService
 ) {
-    suspend fun handleRequest(request: ServerRequest): ServerResponse =
+    suspend fun handleRequest(request: ServerRequest, storeRecord: Boolean = true): ServerResponse =
         if (request.pathVariables().containsKey("phoneNumber")) {
             val number = request.pathVariable("phoneNumber")
             val name = tellowsCidService.getCallerId(number)
-            callHistoryService.registerCallHistory(name, number)
+            if (storeRecord) {
+                callHistoryService.registerCallHistory(name, number)
+            }
             ok().bodyValueAndAwait(name)
         } else {
-            callHistoryService.registerCallHistory("Desconhecido")
+            if (storeRecord) {
+                callHistoryService.registerCallHistory("Desconhecido")
+            }
             ok().bodyValueAndAwait("Desconhecido")
         }
 }
