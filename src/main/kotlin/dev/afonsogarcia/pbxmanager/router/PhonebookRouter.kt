@@ -25,23 +25,29 @@ class PhonebookRouter(
     @Bean
     suspend fun phonebookRoutes(): RouterFunction<ServerResponse> =
         coRouter {
-            GET("/phonebook/") {
-                getPhonebookHandler.handleRequest(it)
-            }
-            GET("/contacts/") {
-                getContactsHandler.handleRequest(it)
-            }
-            POST("/contacts/") {
-                createContactHandler.handleRequest(it)
-            }
-            GET("/contacts/{id}") {
-                getContactHandler.handleRequest(it)
-            }
-            PATCH("/contacts/{id}") {
-                updateContactHandler.handleRequest(it)
-            }
-            DELETE("/contacts/{id}") {
-                deleteContactHandler.handleRequest(it)
+            "/api".nest {
+                "/phonebook".nest {
+                    GET("/") {
+                        getPhonebookHandler.handleRequest(it)
+                    }
+                }
+                "/contacts".nest {
+                    GET("/") {
+                        getContactsHandler.handleRequest(it)
+                    }
+                    POST("/") {
+                        createContactHandler.handleRequest(it)
+                    }
+                    GET("/{id}") {
+                        getContactHandler.handleRequest(it)
+                    }
+                    PATCH("/{id}") {
+                        updateContactHandler.handleRequest(it)
+                    }
+                    DELETE("/{id}") {
+                        deleteContactHandler.handleRequest(it)
+                    }
+                }
             }
         }
 }

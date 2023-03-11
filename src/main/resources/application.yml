@@ -14,10 +14,6 @@ tellows:
   country: pt
   language: pt
 
-server:
-  servlet:
-    context-path: /api
-
 ---
 
 spring:

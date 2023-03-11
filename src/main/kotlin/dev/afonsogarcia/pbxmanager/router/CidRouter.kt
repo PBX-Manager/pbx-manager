@@ -16,11 +16,13 @@ class CidRouter (
     @Bean
     suspend fun cidRoutes(): RouterFunction<ServerResponse> =
         coRouter {
-            GET("/cid/{phoneNumber}") {
-                ok().bodyValueAndAwait(tellowsCidService.getCallerId(it.pathVariable("phoneNumber")))
-            }
-            GET("/cid/") {
-                ok().bodyValueAndAwait("Desconhecido")
+            "/api/cid".nest {
+                GET("/{phoneNumber}") {
+                    ok().bodyValueAndAwait(tellowsCidService.getCallerId(it.pathVariable("phoneNumber")))
+                }
+                GET("/") {
+                    ok().bodyValueAndAwait("Desconhecido")
+                }
             }
         }
 }
