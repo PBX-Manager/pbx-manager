@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.coRouter
 
 @Component
-class CidRouter (
+class CidRouter(
     private val getCallerIdHandler: GetCallerIdHandler,
     private val getCallHistoryHandler: GetCallHistoryHandler
 ) {
@@ -17,27 +17,25 @@ class CidRouter (
     @Bean
     suspend fun cidRoutes(): RouterFunction<ServerResponse> =
         coRouter {
-            "/api".nest {
-                "/cid".nest {
-                    "/check".nest {
-                        GET("/{phoneNumber}") {
-                            getCallerIdHandler.handleRequest(it, false)
-                        }
-                        GET("/") {
-                            getCallerIdHandler.handleRequest(it, false)
-                        }
-                    }
+            "/cid".nest {
+                "/check".nest {
                     GET("/{phoneNumber}") {
-                        getCallerIdHandler.handleRequest(it)
+                        getCallerIdHandler.handleRequest(it, false)
                     }
                     GET("/") {
-                        getCallerIdHandler.handleRequest(it)
+                        getCallerIdHandler.handleRequest(it, false)
                     }
                 }
-                "/call-history".nest {
-                    GET("/") {
-                        getCallHistoryHandler.handleRequest(it)
-                    }
+                GET("/{phoneNumber}") {
+                    getCallerIdHandler.handleRequest(it)
+                }
+                GET("/") {
+                    getCallerIdHandler.handleRequest(it)
+                }
+            }
+            "/call-history".nest {
+                GET("/") {
+                    getCallHistoryHandler.handleRequest(it)
                 }
             }
         }

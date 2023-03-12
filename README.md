@@ -20,6 +20,7 @@ The following mandatory environment variables must be set:
 | FREEPBX_OAUTH_CLIENT_SECRET     | Client secret obtained for PBX-Manager                        |
 | FREEPBX_OAUTH_AUTHORIZATION_URL | OAuth 2 authorization endpoint of your FreePBX instance       |
 | FREEPBX_OAUTH_TOKEN_URL         | OAuth 2 token endpoint of your FreePBX instance               |
+| ALLOWED_ORIGINS                 | URLs of clients that can access the backend (CORS header)     |
 
 The following environment variable must be set if the PostgreSQL host is not running on the default port:
 

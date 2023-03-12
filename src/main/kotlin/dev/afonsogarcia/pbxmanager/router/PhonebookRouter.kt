@@ -15,11 +15,9 @@ class PhonebookRouter(
     @Bean
     suspend fun phonebookRoutes(): RouterFunction<ServerResponse> =
         coRouter {
-            "/api".nest {
-                "/phonebook".nest {
-                    GET("/") {
-                        getPhonebookHandler.handleRequest(it)
-                    }
+            "/phonebook".nest {
+                GET("/") {
+                    getPhonebookHandler.handleRequest(it)
                 }
             }
         }

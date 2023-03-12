@@ -10,6 +10,8 @@ spring:
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT:5432}/${POSTGRES_DB}
     user: ${POSTGRES_USER}
     password: ${POSTGRES_PASS}
+  webflux:
+    base-path: "/api"
 
 tellows:
   api-url: https://www.tellows.com/basic
@@ -26,3 +28,6 @@ graphql:
       token-uri: ${FREEPBX_OAUTH_TOKEN_URL}
       scope: gql
       authorization-uri: ${FREEPBX_OAUTH_AUTHORIZATION_URL}
+
+security:
+  allowed-origins: ${ALLOWED_ORIGINS}

@@ -1,10 +1,12 @@
 package dev.afonsogarcia.pbxmanager.model
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import dev.afonsogarcia.pbxmanager.validation.PhoneNumber
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 
 @Table(name = "contacts")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class Contact (
     @Id val id: Int?,
     val name: String,

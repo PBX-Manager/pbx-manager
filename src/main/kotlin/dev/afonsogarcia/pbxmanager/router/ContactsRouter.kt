@@ -20,26 +20,24 @@ class ContactsRouter(
     @Bean
     suspend fun contactsRoutes(): RouterFunction<ServerResponse> =
         coRouter {
-            "/api".nest {
-                "/contacts".nest {
-                    GET("/") {
-                        getContactsHandler.handleRequest(it)
-                    }
-                    POST("/") {
-                        createContactHandler.handleRequest(it)
-                    }
-                    GET("/{id}") {
-                        getContactHandler.handleRequest(it)
-                    }
-                    PATCH("/{id}") {
-                        updateContactHandler.handleRequest(it)
-                    }
-                    DELETE("/{id}") {
-                        deleteContactHandler.handleRequest(it)
-                    }
-                    GET("/sync/") {
-                        syncPhonebookHandler.handleRequest(it)
-                    }
+            "/contacts".nest {
+                GET("/") {
+                    getContactsHandler.handleRequest(it)
+                }
+                POST("/") {
+                    createContactHandler.handleRequest(it)
+                }
+                GET("/{id}") {
+                    getContactHandler.handleRequest(it)
+                }
+                PATCH("/{id}") {
+                    updateContactHandler.handleRequest(it)
+                }
+                DELETE("/{id}") {
+                    deleteContactHandler.handleRequest(it)
+                }
+                GET("/sync/") {
+                    syncPhonebookHandler.handleRequest(it)
                 }
             }
         }
