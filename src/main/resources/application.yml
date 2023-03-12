@@ -25,3 +25,4 @@ graphql:
       client-secret: ${FREEPBX_OAUTH_CLIENT_SECRET}
       token-uri: ${FREEPBX_OAUTH_TOKEN_URL}
       scope: gql
+      authorization-uri: ${FREEPBX_OAUTH_AUTHORIZATION_URL}
