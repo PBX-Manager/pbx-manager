@@ -28,9 +28,9 @@ class ContactsService(
             if (contact.internalExtension != null) {
                 val freePbxContact = freePbxService.getExtensionDetails(contact.internalExtension)
                 if (freePbxContact != null) {
-                    saveContact(contact.withName(freePbxContact.user.name!!))
+                    saveContact(contact.withName(freePbxContact.user.name!!, true))
                 } else {
-                    saveContact(contact.excludeInternalExtension())
+                    saveContact(contact.excludeInternalExtension(false))
                 }
             }
         }
@@ -38,7 +38,7 @@ class ContactsService(
         val freePbxContacts =
             freePbxService.getFreePbxContacts().filter { fpbx -> contacts.none { c -> c.internalExtension == fpbx.internalExtension } }
         for (freePbxContact in freePbxContacts) {
-            saveContact(freePbxContact.removeId())
+            saveContact(freePbxContact.removeId(true))
         }
     }
 }

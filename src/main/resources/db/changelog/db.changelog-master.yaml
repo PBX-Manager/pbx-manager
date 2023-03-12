@@ -59,3 +59,16 @@ databaseChangeLog:
                   type: TIMESTAMP
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 3
+      author: afonsoFGarcia
+      changes:
+        - addColumn:
+            tableName: contacts
+            columns:
+              - column:
+                  name: synced
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false

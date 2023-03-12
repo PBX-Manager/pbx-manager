@@ -13,9 +13,10 @@ data class Contact (
     @PhoneNumber("Office Mobile is not a valid phone number") val officeMobileNumber: String? = null,
     @PhoneNumber("Home is not a valid phone number") val homeNumber: String? = null,
     @PhoneNumber("Mobile is not a valid phone number") val mobileNumber: String? = null,
-    @PhoneNumber("Other Number is not a valid phone number") val otherNumber: String? = null
+    @PhoneNumber("Other Number is not a valid phone number") val otherNumber: String? = null,
+    val synced: Boolean
 ) {
-    fun withName(name: String): Contact =
+    fun withName(name: String, synced: Boolean): Contact =
         Contact(
             id = this.id,
             name = name,
@@ -24,10 +25,11 @@ data class Contact (
             mobileNumber = this.mobileNumber,
             officeNumber = this.officeNumber,
             officeMobileNumber = this.officeMobileNumber,
-            otherNumber = this.otherNumber
+            otherNumber = this.otherNumber,
+            synced = synced
         )
 
-    fun excludeInternalExtension(): Contact =
+    fun excludeInternalExtension(synced: Boolean): Contact =
         Contact(
             id = this.id,
             name = this.name,
@@ -36,10 +38,11 @@ data class Contact (
             mobileNumber = this.mobileNumber,
             officeNumber = this.officeNumber,
             officeMobileNumber = this.officeMobileNumber,
-            otherNumber = this.otherNumber
+            otherNumber = this.otherNumber,
+            synced = synced
         )
 
-    fun removeId(): Contact =
+    fun removeId(synced: Boolean): Contact =
         Contact(
             id = null,
             name = this.name,
@@ -48,6 +51,7 @@ data class Contact (
             mobileNumber = this.mobileNumber,
             officeNumber = this.officeNumber,
             officeMobileNumber = this.officeMobileNumber,
-            otherNumber = this.otherNumber
+            otherNumber = this.otherNumber,
+            synced = synced
         )
 }

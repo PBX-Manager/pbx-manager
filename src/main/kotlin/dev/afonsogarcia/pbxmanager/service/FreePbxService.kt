@@ -43,7 +43,8 @@ class FreePbxService(
             Contact(
                 id = -(it.extensionId?.toInt() ?: 0),
                 name = it.user?.name ?: "",
-                internalExtension = it.extensionId
+                internalExtension = it.extensionId,
+                synced = true
             )
         } ?: emptyList()
 
