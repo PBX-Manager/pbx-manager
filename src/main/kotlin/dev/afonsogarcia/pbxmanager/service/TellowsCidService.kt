@@ -13,9 +13,10 @@ import org.springframework.web.reactive.function.client.awaitExchange
 @Service
 class TellowsCidService (
     private val config: TellowsConfiguration,
-    private val client: WebClient = WebClient.create("https://www.tellows.com/basic"),
     private val objectMapper: ObjectMapper
 ) {
+
+    private val client = WebClient.create(config.apiUrl);
 
     suspend fun getCallerId(phoneNumber: String): String = if (phoneNumber.isPhoneNumber()) {
         client.get().uri {

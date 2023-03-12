@@ -6,12 +6,12 @@ import org.springframework.data.relational.core.mapping.Table
 
 @Table(name = "contacts")
 data class Contact (
-    @Id val id: Int,
-    var name: String,
-    @PhoneNumber("Internal Extension is not a valid phone number") var internalExtension: String?,
-    @PhoneNumber("Office is not a valid phone number") var officeNumber: String?,
-    @PhoneNumber("Office Mobile is not a valid phone number") var officeMobileNumber: String?,
-    @PhoneNumber("Home is not a valid phone number") var homeNumber: String?,
-    @PhoneNumber("Mobile is not a valid phone number") var mobileNumber: String?,
-    @PhoneNumber("Other Number is not a valid phone number") var otherNumber: String?
+    @Id val id: Int?,
+    val name: String,
+    @PhoneNumber("Internal Extension is not a valid phone number") val internalExtension: String? = null,
+    @PhoneNumber("Office is not a valid phone number") val officeNumber: String? = null,
+    @PhoneNumber("Office Mobile is not a valid phone number") val officeMobileNumber: String? = null,
+    @PhoneNumber("Home is not a valid phone number") val homeNumber: String? = null,
+    @PhoneNumber("Mobile is not a valid phone number") val mobileNumber: String? = null,
+    @PhoneNumber("Other Number is not a valid phone number") val otherNumber: String? = null
 )

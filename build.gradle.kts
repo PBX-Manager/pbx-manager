@@ -35,6 +35,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("com.sun.xml.bind:jaxb-impl:4.0.2")
+	implementation("com.graphql-java-kickstart:graphql-webclient-spring-boot-starter:2.0.1")
 	runtimeOnly("org.postgresql:postgresql")
 	runtimeOnly("org.postgresql:r2dbc-postgresql")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

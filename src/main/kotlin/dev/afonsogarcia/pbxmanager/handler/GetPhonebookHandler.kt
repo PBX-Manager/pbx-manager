@@ -1,5 +1,6 @@
 package dev.afonsogarcia.pbxmanager.handler
 
+import dev.afonsogarcia.pbxmanager.service.ContactsService
 import dev.afonsogarcia.pbxmanager.service.PhonebookService
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component

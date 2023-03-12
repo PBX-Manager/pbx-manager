@@ -15,12 +15,3 @@ data class TellowsConfiguration(
     val country: String,
     val language: String
 )
-
-@Configuration
-class TellowsBeans (
-    private val config: TellowsConfiguration
-) {
-
-    @Bean
-    fun tellowsWebClient(): WebClient = WebClient.create(config.apiUrl);
-}

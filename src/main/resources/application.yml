@@ -1,26 +1,27 @@
 spring:
-  r2dbc:
-    url: r2dbc:postgres://localhost:5432/pbxmanager
-    username: user
-    password: pass
-  liquibase:
-    url: jdbc:postgresql://localhost:5432/pbxmanager
-    user: user
-    password: pass
-
-tellows:
-  api-url: https://www.tellows.com/basic
-  api-key-md5: 399a147c51f6942600fa41412f2678d1
-  country: pt
-  language: pt
-
----
-
-spring:
   config:
     activate:
       on-profile: docker
   r2dbc:
-    url: r2dbc:postgres://${POSTGRES_HOST:host.docker.internal}:5432/pbxmanager
+    url: r2dbc:postgres://${POSTGRES_HOST}:${POSTGRES_PORT:5432}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASS}
   liquibase:
-    url: jdbc:postgresql://${POSTGRES_HOST:host.docker.internal}:5432/pbxmanager
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT:5432}/${POSTGRES_DB}
+    user: ${POSTGRES_USER}
+    password: ${POSTGRES_PASS}
+
+tellows:
+  api-url: https://www.tellows.com/basic
+  api-key-md5: ${TELLOWS_API_KEY}
+  country: ${TELLOWS_COUNTRY}
+  language: ${TELLOWS_LANGUAGE}
+
+graphql:
+  client:
+    url: ${FREEPBX_GRAPHQL_URL}
+    oauth2:
+      client-id: ${FREEPBX_OAUTH_CLIENT_ID}
+      client-secret: ${FREEPBX_OAUTH_CLIENT_SECRET}
+      token-uri: ${FREEPBX_OAUTH_TOKEN_URL}
+      scope: gql

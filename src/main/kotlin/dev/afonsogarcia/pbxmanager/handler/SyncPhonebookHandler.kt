@@ -1,7 +1,6 @@
 package dev.afonsogarcia.pbxmanager.handler
 
-import dev.afonsogarcia.pbxmanager.service.ContactsService
-import kotlinx.coroutines.reactor.awaitSingle
+import dev.afonsogarcia.pbxmanager.service.PhonebookService
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
@@ -9,13 +8,9 @@ import org.springframework.web.reactive.function.server.ServerResponse.ok
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
 @Component
-class GetContactHandler (
-    private val contactsService: ContactsService
+class SyncPhonebookHandler (
+    private val phonebookService: PhonebookService
 ) {
     suspend fun handleRequest(request: ServerRequest): ServerResponse =
-        if (contactsService.contactExists(request.pathVariable("id").toInt())) {
-            ok().bodyValueAndAwait(contactsService.getContact(request.pathVariable("id").toInt())!!)
-        } else {
-            ServerResponse.notFound().build().awaitSingle()
-        }
+        ok().bodyValueAndAwait(phonebookService.syncPhonebook())
 }
