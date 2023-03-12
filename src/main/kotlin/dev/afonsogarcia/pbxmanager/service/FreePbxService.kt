@@ -2,6 +2,7 @@ package dev.afonsogarcia.pbxmanager.service
 
 import dev.afonsogarcia.pbxmanager.dto.freepbx.FetchAllExtensions
 import dev.afonsogarcia.pbxmanager.dto.freepbx.FetchExtension
+import dev.afonsogarcia.pbxmanager.model.Contact
 import graphql.kickstart.spring.webclient.boot.GraphQLRequest
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient
 import kotlinx.coroutines.reactor.awaitSingle
@@ -37,7 +38,16 @@ class FreePbxService(
         null
     }
 
-    suspend fun getAllExtensionDetails(): FetchAllExtensions {
+    suspend fun getFreePbxContacts() =
+        getAllExtensionDetails().extension?.map {
+            Contact(
+                id = -(it.extensionId?.toInt() ?: 0),
+                name = it.user?.name ?: "",
+                internalExtension = it.extensionId
+            )
+        } ?: emptyList()
+
+    private suspend fun getAllExtensionDetails(): FetchAllExtensions {
         val request = GraphQLRequest.builder().query(
             """
             {

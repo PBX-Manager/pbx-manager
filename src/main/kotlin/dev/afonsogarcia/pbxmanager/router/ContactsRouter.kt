@@ -1,10 +1,6 @@
 package dev.afonsogarcia.pbxmanager.router
 
-import dev.afonsogarcia.pbxmanager.handler.CreateContactHandler
-import dev.afonsogarcia.pbxmanager.handler.DeleteContactHandler
-import dev.afonsogarcia.pbxmanager.handler.GetContactHandler
-import dev.afonsogarcia.pbxmanager.handler.GetContactsHandler
-import dev.afonsogarcia.pbxmanager.handler.UpdateContactHandler
+import dev.afonsogarcia.pbxmanager.handler.*
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.RouterFunction
@@ -17,7 +13,8 @@ class ContactsRouter(
     private val updateContactHandler: UpdateContactHandler,
     private val deleteContactHandler: DeleteContactHandler,
     private val getContactHandler: GetContactHandler,
-    private val getContactsHandler: GetContactsHandler
+    private val getContactsHandler: GetContactsHandler,
+    private val syncPhonebookHandler: SyncPhonebookHandler
 ) {
 
     @Bean
@@ -39,6 +36,9 @@ class ContactsRouter(
                     }
                     DELETE("/{id}") {
                         deleteContactHandler.handleRequest(it)
+                    }
+                    GET("/sync/") {
+                        syncPhonebookHandler.handleRequest(it)
                     }
                 }
             }

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class ContactsService(
-    private val contactRepository: ContactRepository
+    private val contactRepository: ContactRepository,
+    private val freePbxService: FreePbxService
 ) {
 
     suspend fun getContacts(): List<Contact> = contactRepository.findAll().toList()
@@ -20,5 +21,24 @@ class ContactsService(
 
     suspend fun getContact(contactId: Int): Contact? = contactRepository.findById(contactId)
 
-    suspend fun getAllContactsWithInternalExtension(): List<Contact> = contactRepository.findAllByInternalExtensionNotNull().toList()
+    suspend fun syncPhonebook() {
+        val contacts = contactRepository.findAllByInternalExtensionNotNull().toList()
+
+        for (contact in contacts) {
+            if (contact.internalExtension != null) {
+                val freePbxContact = freePbxService.getExtensionDetails(contact.internalExtension)
+                if (freePbxContact != null) {
+                    saveContact(contact.withName(freePbxContact.user.name!!))
+                } else {
+                    saveContact(contact.excludeInternalExtension())
+                }
+            }
+        }
+
+        val freePbxContacts =
+            freePbxService.getFreePbxContacts().filter { fpbx -> contacts.none { c -> c.internalExtension == fpbx.internalExtension } }
+        for (freePbxContact in freePbxContacts) {
+            saveContact(freePbxContact.removeId())
+        }
+    }
 }

@@ -15,41 +15,11 @@ class PhonebookService(
     suspend fun getPhonebook(): PhoneDirectory {
         val contacts = contactsService.getContacts()
         val freePbxContacts =
-            getFreePbxContacts().filter { fpbx -> contacts.none { c -> c.internalExtension == fpbx.internalExtension } }
+            freePbxService.getFreePbxContacts().filter { fpbx -> contacts.none { c -> c.internalExtension == fpbx.internalExtension } }
         val directoryEntries = (contacts + freePbxContacts).mapNotNull { it.toDirectoryEntry() }.sortedBy { it.name }
 
         return PhoneDirectory(directoryEntries)
     }
-
-    suspend fun syncPhonebook() {
-        val contacts = contactsService.getContacts()
-
-        for (contact in contacts) {
-            if (contact.internalExtension != null) {
-                val freePbxContact = freePbxService.getExtensionDetails(contact.internalExtension)
-                if (freePbxContact != null) {
-                    contactsService.saveContact(contact.withName(freePbxContact.user.name!!))
-                } else {
-                    contactsService.saveContact(contact.excludeInternalExtension())
-                }
-            }
-        }
-
-        val freePbxContacts =
-            getFreePbxContacts().filter { fpbx -> contacts.none { c -> c.internalExtension == fpbx.internalExtension } }
-        for (freePbxContact in freePbxContacts) {
-            contactsService.saveContact(freePbxContact.removeId())
-        }
-    }
-
-    private suspend fun getFreePbxContacts() =
-        freePbxService.getAllExtensionDetails().extension?.map {
-            Contact(
-                id = -(it.extensionId?.toInt() ?: 0),
-                name = it.user?.name ?: "",
-                internalExtension = it.extensionId
-            )
-        } ?: emptyList()
 
     private suspend fun Contact.toDirectoryEntry(): DirectoryEntry? {
         val directoryEntry = DirectoryEntry()
@@ -82,40 +52,4 @@ class PhonebookService(
         label = label,
         phoneNumber = this
     )
-
-    private fun Contact.withName(name: String): Contact =
-        Contact(
-            id = this.id,
-            name = name,
-            internalExtension = this.internalExtension,
-            homeNumber = this.homeNumber,
-            mobileNumber = this.mobileNumber,
-            officeNumber = this.officeNumber,
-            officeMobileNumber = this.officeMobileNumber,
-            otherNumber = this.otherNumber
-        )
-
-    private fun Contact.excludeInternalExtension(): Contact =
-        Contact(
-            id = this.id,
-            name = this.name,
-            internalExtension = null,
-            homeNumber = this.homeNumber,
-            mobileNumber = this.mobileNumber,
-            officeNumber = this.officeNumber,
-            officeMobileNumber = this.officeMobileNumber,
-            otherNumber = this.otherNumber
-        )
-
-    private fun Contact.removeId(): Contact =
-        Contact(
-            id = null,
-            name = this.name,
-            internalExtension = this.internalExtension,
-            homeNumber = this.homeNumber,
-            mobileNumber = this.mobileNumber,
-            officeNumber = this.officeNumber,
-            officeMobileNumber = this.officeMobileNumber,
-            otherNumber = this.otherNumber
-        )
 }

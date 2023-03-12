@@ -14,4 +14,40 @@ data class Contact (
     @PhoneNumber("Home is not a valid phone number") val homeNumber: String? = null,
     @PhoneNumber("Mobile is not a valid phone number") val mobileNumber: String? = null,
     @PhoneNumber("Other Number is not a valid phone number") val otherNumber: String? = null
-)
+) {
+    fun withName(name: String): Contact =
+        Contact(
+            id = this.id,
+            name = name,
+            internalExtension = this.internalExtension,
+            homeNumber = this.homeNumber,
+            mobileNumber = this.mobileNumber,
+            officeNumber = this.officeNumber,
+            officeMobileNumber = this.officeMobileNumber,
+            otherNumber = this.otherNumber
+        )
+
+    fun excludeInternalExtension(): Contact =
+        Contact(
+            id = this.id,
+            name = this.name,
+            internalExtension = null,
+            homeNumber = this.homeNumber,
+            mobileNumber = this.mobileNumber,
+            officeNumber = this.officeNumber,
+            officeMobileNumber = this.officeMobileNumber,
+            otherNumber = this.otherNumber
+        )
+
+    fun removeId(): Contact =
+        Contact(
+            id = null,
+            name = this.name,
+            internalExtension = this.internalExtension,
+            homeNumber = this.homeNumber,
+            mobileNumber = this.mobileNumber,
+            officeNumber = this.officeNumber,
+            officeMobileNumber = this.officeMobileNumber,
+            otherNumber = this.otherNumber
+        )
+}
