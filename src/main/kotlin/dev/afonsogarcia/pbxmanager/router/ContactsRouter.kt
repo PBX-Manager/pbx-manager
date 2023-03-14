@@ -18,7 +18,7 @@ class ContactsRouter(
 ) {
 
     @Bean
-    suspend fun contactsRoutes(): RouterFunction<ServerResponse> =
+    fun contactsRoutes(): RouterFunction<ServerResponse> =
         coRouter {
             "/contacts".nest {
                 GET("/") {

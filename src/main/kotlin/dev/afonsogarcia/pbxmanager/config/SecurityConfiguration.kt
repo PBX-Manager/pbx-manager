@@ -3,9 +3,9 @@ package dev.afonsogarcia.pbxmanager.config
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.reactive.CorsWebFilter
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 import java.util.*
 
 @ConfigurationProperties("security")
@@ -17,13 +17,20 @@ data class SecurityProperties(
 class SecurityConfiguration (
     private val securityProperties: SecurityProperties
 ) {
+
     @Bean
-    fun corsWebFilter(): CorsWebFilter? {
-        val corsConfig = CorsConfiguration()
-        corsConfig.allowedOrigins = securityProperties.allowedOrigins
-        corsConfig.allowedMethods = listOf("OPTIONS", "GET", "POST", "PATCH", "DELETE")
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", corsConfig)
-        return CorsWebFilter(source)
-    }
+    fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain =
+        http.authorizeExchange {
+            it.anyExchange().permitAll()
+        }.cors {
+            it.configurationSource {
+                CorsConfiguration().apply {
+                    allowedOrigins = securityProperties.allowedOrigins
+                    allowedMethods = listOf("OPTIONS", "GET", "POST", "PATCH", "DELETE")
+                }
+            }
+            it.disable()
+        }.csrf {
+            it.disable()
+        }.build()
 }

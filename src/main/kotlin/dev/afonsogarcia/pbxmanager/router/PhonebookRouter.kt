@@ -13,7 +13,7 @@ class PhonebookRouter(
 ) {
 
     @Bean
-    suspend fun phonebookRoutes(): RouterFunction<ServerResponse> =
+     fun phonebookRoutes(): RouterFunction<ServerResponse> =
         coRouter {
             "/phonebook".nest {
                 GET("/") {

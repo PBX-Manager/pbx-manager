@@ -15,7 +15,7 @@ class CidRouter(
 ) {
 
     @Bean
-    suspend fun cidRoutes(): RouterFunction<ServerResponse> =
+    fun cidRoutes(): RouterFunction<ServerResponse> =
         coRouter {
             "/cid".nest {
                 "/check".nest {
