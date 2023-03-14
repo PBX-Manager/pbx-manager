@@ -88,7 +88,9 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build PBX-Manager jar
-        run: ./gradlew bootBuildImage --imageName=${{ steps.meta.output.tags }}
+        run: ./gradlew bootBuildImage --imageName=$TAG_NAME
+        env:
+          TAG_NAME: ${{ steps.meta.output.tags }}
 
       - name: Push Docker image
         run: docker push ${{ steps.meta.outputs.tags }}
